@@ -12,24 +12,36 @@ function getCall() {
 };
 
 function initMap() {
-    const opt = {
-        center: { lat: 50.0984963, lng: 36.1288546 },
-        zoom: 12
-    };
     const geocoder = new google.maps.Geocoder();
 
     navigator.geolocation.getCurrentPosition(function (position) {
-        opt.center.lat = position.coords.latitude;
-        opt.center.lng = position.coords.longitude;
-        console.log('Широта', opt.center.lat);
-        console.log('Довгота', opt.center.lng);
-        geocodeLatLng(geocoder, opt.center);
+        const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+
+        console.log('Широта', pos.lat);
+        console.log('Довгота', pos.lng);
+
+        geocodeLatLng(geocoder, pos);
+
+        const opt = {
+            center: pos,
+            zoom: 12
+        };
+
+        const myMap = new google.maps.Map(document.getElementById("map"), opt);
+
+        const marker = new google.maps.Marker({
+            position: pos,
+            map: myMap,
+            title: 'Ты навел на меня',
+            icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+        });
     });
 
-
-    const myMap = new google.maps.Map(document.getElementById("map"), opt);
     document.cookie = "SameSite=None; Secure";
-};
+}
 
 function geocodeLatLng(geocoder, pos) {
     geocoder.geocode({ location: pos }, (results, status) => {

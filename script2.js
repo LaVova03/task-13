@@ -13,7 +13,6 @@ function getCall() {
 
 function initMap() {
     const geocoder = new google.maps.Geocoder();
-
     navigator.geolocation.getCurrentPosition(function (position) {
         const pos = {
             lat: position.coords.latitude,
@@ -22,7 +21,6 @@ function initMap() {
 
         console.log('Широта', pos.lat);
         console.log('Довгота', pos.lng);
-
         geocodeLatLng(geocoder, pos);
 
         const opt = {
@@ -31,7 +29,6 @@ function initMap() {
         };
 
         const myMap = new google.maps.Map(document.getElementById("map"), opt);
-
         const marker = new google.maps.Marker({
             position: pos,
             map: myMap,
@@ -39,10 +36,8 @@ function initMap() {
             icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
         });
     });
-
     document.cookie = "SameSite=None; Secure";
 }
-
 function geocodeLatLng(geocoder, pos) {
     geocoder.geocode({ location: pos }, (results, status) => {
         if (status === "OK" && results[0]) {
